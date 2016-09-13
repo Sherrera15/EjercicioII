@@ -131,9 +131,15 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Resultado"));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtEntero3.setEditable(false);
         jPanel3.add(txtEntero3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 60, -1));
+
+        txtNumerador3.setEditable(false);
         jPanel3.add(txtNumerador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 80, -1));
         jPanel3.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 120, 10));
+
+        txtDenominador3.setEditable(false);
         jPanel3.add(txtDenominador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 80, -1));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 240, 120));
@@ -151,8 +157,12 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jPanel4.add(cmdFraccionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
+
+        txtNumerador4.setEditable(false);
         jPanel4.add(txtNumerador4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 60, -1));
         jPanel4.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 110, 10));
+
+        txtDenominador4.setEditable(false);
         jPanel4.add(txtDenominador4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 60, -1));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 280, 110));
@@ -183,6 +193,7 @@ public class Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Digite el entero de la primera fracción", "error", JOptionPane.ERROR_MESSAGE);
             txtEntero1.requestFocusInWindow();
             txtEntero1.selectAll();
+            
           } else if (txtEntero2.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Digite el entero de la segunda fracción", "error", JOptionPane.ERROR_MESSAGE);
             txtEntero2.requestFocusInWindow();
@@ -247,9 +258,10 @@ public class Principal extends javax.swing.JFrame {
                         break;
 
                 }
-                txtEntero3.setText("" + f3.getNumerador());
-                txtDenominador2.setText("" + f3.getDenominador());
+                txtNumerador3.setText("" + f3.getNumerador());
+                txtDenominador3.setText("" + f3.getDenominador());
                 txtEntero3.setText("" + f3.getEntero());
+                
             } catch (DenominadorCeroException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
