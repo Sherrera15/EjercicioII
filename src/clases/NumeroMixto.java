@@ -5,23 +5,26 @@
  */
 package clases;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Herrera
  */
 public class NumeroMixto {
+
     private int numerador;
     private int denominador;
     private int entero;
 
-    public NumeroMixto( int numerador, int denominador,int entero)throws DenominadorCeroException {
+    public NumeroMixto(int numerador, int denominador, int entero) throws DenominadorCeroException {
         this.numerador = numerador;
         this.denominador = denominador;
         this.entero = entero;
         if (denominador == 0) {
             throw new DenominadorCeroException();
         }
-        
+
     }
 
     public int getNumerador() {
@@ -48,10 +51,9 @@ public class NumeroMixto {
         this.entero = entero;
     }
 
-    public NumeroMixto sumar(NumeroMixto f2) throws DenominadorCeroException{
+    public NumeroMixto sumar(NumeroMixto f2) throws DenominadorCeroException {
         NumeroMixto f;
-        int num1, den1, num2, den2, num, den, ente, dentotal,numtotal;
-        
+        int num1, den1, num2, den2, num, den, ente, dentotal, numtotal;
 
         num1 = this.entero * this.denominador + this.numerador;
         den1 = this.denominador;
@@ -70,10 +72,10 @@ public class NumeroMixto {
 
     }
 
-    public NumeroMixto restar(NumeroMixto f2) throws DenominadorCeroException{
+    public NumeroMixto restar(NumeroMixto f2) throws DenominadorCeroException {
+
         NumeroMixto f;
-        int num1, den1, num2, den2, num, den, ente, dentotal,numtotal;
-       
+        int num1, den1, num2, den2, num, den, ente, dentotal, numtotal;
 
         num1 = this.entero * this.denominador + this.numerador;
         den1 = this.denominador;
@@ -83,19 +85,17 @@ public class NumeroMixto {
         numtotal = (num1 * den2) - (den1 * num2);
         dentotal = den1 * den2;
 
-        
         ente = numtotal / dentotal;
         num = numtotal % ente;
         den = dentotal;
 
         f = new NumeroMixto(ente, num, den);
         return f;
-
     }
 
     public NumeroMixto multiplicar(NumeroMixto f2) throws DenominadorCeroException {
         NumeroMixto f;
-        int num1, den1, num2, den2, num, den, ente, dentotal,numtotal;
+        int num1, den1, num2, den2, num, den, ente, dentotal, numtotal;
 
         num1 = this.entero * this.denominador + this.numerador;
         den1 = this.denominador;
@@ -107,18 +107,18 @@ public class NumeroMixto {
 
         ente = numtotal / dentotal;
         num = numtotal % ente;
-        den= dentotal;
+        den = dentotal;
 
         f = new NumeroMixto(ente, num, dentotal);
         return f;
 
     }
-    
+
     public NumeroMixto dividir(NumeroMixto f2) throws DenominadorCeroException {
         NumeroMixto f;
-        
-        int num1, den1, num2, den2, num, den, ente, dentotal,numtotal;
-        
+
+        int num1, den1, num2, den2, num, den, ente, dentotal, numtotal;
+
         num1 = this.entero * this.denominador + this.numerador;
         den1 = this.denominador;
         num2 = f2.entero * f2.denominador + f2.numerador;

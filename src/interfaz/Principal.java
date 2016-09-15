@@ -20,6 +20,9 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        cmdBorrar.setEnabled(true);
+        cmdCalcular.setEnabled(true);
+        cmdFraccionario.setEnabled(false);
     }
 
     /**
@@ -74,6 +77,7 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("JasmineUPC", 3, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 102, 255));
         jLabel1.setText("NÚMEROS MIXTOS");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
 
@@ -129,6 +133,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, -1, -1));
 
+        jPanel3.setBackground(new java.awt.Color(255, 204, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Resultado"));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -144,6 +149,7 @@ public class Principal extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 240, 120));
 
+        jPanel4.setBackground(new java.awt.Color(255, 204, 204));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Fracción"));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -175,7 +181,7 @@ public class Principal extends javax.swing.JFrame {
         });
         getContentPane().add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 110, 30));
 
-        cmdBorrar.setText("Borrar");
+        cmdBorrar.setText("Limpiar");
         cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdBorrarActionPerformed(evt);
@@ -188,47 +194,40 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
-        
-          if (txtEntero1.getText().trim().isEmpty()) {
+
+        if (txtEntero1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Digite el entero de la primera fracción", "error", JOptionPane.ERROR_MESSAGE);
             txtEntero1.requestFocusInWindow();
             txtEntero1.selectAll();
-            
-          } else if (txtEntero2.getText().trim().isEmpty()) {
+
+        } else if (txtEntero2.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Digite el entero de la segunda fracción", "error", JOptionPane.ERROR_MESSAGE);
             txtEntero2.requestFocusInWindow();
             txtEntero2.selectAll();
-            
-            
+
         } else if (txtNumerador1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Digite el primer numerador", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtNumerador1.requestFocusInWindow();
             txtNumerador1.selectAll();
-            
-         
+
         } else if (txtNumerador2.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Digite el segundo numerador", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtNumerador2.requestFocusInWindow();
             txtNumerador2.selectAll();
-            
-            
+
         } else if (txtDenominador1.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Digite el primer denominador", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtDenominador1.requestFocusInWindow();
             txtDenominador1.selectAll();
-            
-            
+
         } else if (txtDenominador2.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Digite el segundo denominador", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtDenominador2.requestFocusInWindow();
             txtDenominador2.selectAll();
-            
-        } 
-            
-            
-        else {
 
-            int op, e1,e2,n1,n2,d1,d2;
+        } else {
+
+            int op, e1, e2, n1, n2, d1, d2;
             NumeroMixto f1, f2, f3 = null;
             op = cmbOperacion.getSelectedIndex();
             n1 = Integer.parseInt(txtNumerador1.getText());
@@ -238,15 +237,23 @@ public class Principal extends javax.swing.JFrame {
             e1 = Integer.parseInt(txtEntero1.getText());
             e2 = Integer.parseInt(txtEntero2.getText());
             try {
-                f1 = new NumeroMixto(e1,n1,d1);
-                f2 = new NumeroMixto(e2,n2,d2);
+                f1 = new NumeroMixto(e1, n1, d1);
+                f2 = new NumeroMixto(e2, n2, d2);
                 switch (op) {
                     case 0:
                         f3 = f1.sumar(f2);
 
                         break;
                     case 1:
-                        f3 = f1.restar(f2);
+                        try {
+                            f3 = f1.restar(f2);
+                        } catch (ArithmeticException e) {
+                            JOptionPane.showMessageDialog(this, "La resta es igual a 0", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        } catch (NullPointerException e) {
+                            txtEntero1.requestFocusInWindow();
+                            txtEntero1.selectAll();
+                            
+                        }
 
                         break;
                     case 2:
@@ -261,15 +268,18 @@ public class Principal extends javax.swing.JFrame {
                 txtNumerador3.setText("" + f3.getNumerador());
                 txtDenominador3.setText("" + f3.getDenominador());
                 txtEntero3.setText("" + f3.getEntero());
-                
+
             } catch (DenominadorCeroException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
+            cmdBorrar.setEnabled(true);
+            cmdCalcular.setEnabled(false);
+            cmdFraccionario.setEnabled(true);
         }
     }//GEN-LAST:event_cmdCalcularActionPerformed
 
     private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
-       
+
         txtEntero1.setText("");
         txtEntero2.setText("");
         txtEntero3.setText("");
@@ -277,16 +287,18 @@ public class Principal extends javax.swing.JFrame {
         txtNumerador2.setText("");
         txtNumerador3.setText("");
         txtNumerador4.setText("");
-        
+
         txtDenominador1.setText("");
         txtDenominador2.setText("");
         txtDenominador3.setText("");
         txtDenominador4.setText("");
-        
-        
-        
+
         txtEntero1.requestFocusInWindow();
         cmbOperacion.setSelectedIndex(0);
+
+        cmdBorrar.setEnabled(true);
+        cmdCalcular.setEnabled(true);
+        cmdFraccionario.setEnabled(false);
     }//GEN-LAST:event_cmdBorrarActionPerformed
 
     private void txtEntero1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEntero1KeyTyped
@@ -299,7 +311,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEntero1KeyTyped
 
     private void txtNumerador1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumerador1KeyTyped
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
 
         if (!Character.isDigit(c)) {
             getToolkit().beep();
@@ -308,7 +320,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNumerador1KeyTyped
 
     private void txtDenominador1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDenominador1KeyTyped
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
 
         if (!Character.isDigit(c)) {
             getToolkit().beep();
@@ -317,7 +329,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDenominador1KeyTyped
 
     private void txtEntero2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEntero2KeyTyped
-         char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
 
         if (!Character.isDigit(c)) {
             getToolkit().beep();
@@ -344,40 +356,38 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDenominador2KeyTyped
 
     private void cmdFraccionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFraccionarioActionPerformed
-         
-        
-        String  num, den;
-        int num3, den3, c1,ente3, nm, dn;
-      
+
+        String num, den;
+        int num3, den3, c1, ente3, nm, dn;
+
         if (txtEntero3.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe adquirir el resultado", "error", JOptionPane.ERROR_MESSAGE);
             txtEntero1.requestFocusInWindow();
             txtEntero1.selectAll();
-        } 
-          else if (txtNumerador3.getText().trim().isEmpty()) {
+        } else if (txtNumerador3.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe adquirise el resultado de la operación realizada", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtEntero1.requestFocusInWindow();
             txtEntero1.selectAll();
-        }
-          else if (txtDenominador3.getText().trim().isEmpty()) {
+        } else if (txtDenominador3.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe adquirise el resultado de la operación realizada", "ERROR", JOptionPane.ERROR_MESSAGE);
             txtEntero3.requestFocusInWindow();
             txtEntero3.selectAll();
+        } else {
+
+            num3 = Integer.parseInt(txtNumerador3.getText());
+            den3 = Integer.parseInt(txtDenominador3.getText());
+            ente3 = Integer.parseInt(txtEntero3.getText());
+            nm = (den3 * ente3) + num3;
+            dn = den3;
+            num = String.valueOf(nm);
+            txtNumerador4.setText(num);
+            den = String.valueOf(dn);
+            txtDenominador4.setText(den);
+
+            cmdBorrar.setEnabled(true);
+            cmdCalcular.setEnabled(false);
+            cmdFraccionario.setEnabled(false);
         }
-                 else {
-
-            
-
-        num3 = Integer.parseInt(txtNumerador3.getText());
-        den3 = Integer.parseInt(txtDenominador3.getText());
-        ente3 = Integer.parseInt(txtEntero3.getText());
-        nm=(den3*ente3)+num3;
-        dn= den3;
-        num = String.valueOf(nm);
-        txtNumerador4.setText(num);
-        den = String.valueOf(dn);
-        txtDenominador4.setText(den);
-}
     }//GEN-LAST:event_cmdFraccionarioActionPerformed
 
     /**
